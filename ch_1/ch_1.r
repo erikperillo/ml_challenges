@@ -68,10 +68,10 @@ main <- function()
 	#getting principal components
 	pcs <- prcomp(x, scale=FALSE)
 
-	#1. Faca o PCA dos dados (sem a última coluna). 
-	#Se voce quiser que os dados transformados tenham 80% da variância original,
-	#quantas dimensões do PCA vc precisa manter?
-	#Gere os dados transformados mantendo 80\% da variância. 
+	#1. Faca o PCA dos dados (sem a ultima coluna). 
+	#Se voce quiser que os dados transformados tenham 80% da variancia original,
+	#quantas dimensoes do PCA vc precisa manter?
+	#Gere os dados transformados mantendo 80\% da variancia. 
 	printf("Item 1:\n")
 	min_pcs <- pca_min_pcs(pcs, min_var)
 	#getting transformation matrix
@@ -90,9 +90,9 @@ main <- function()
 	x_part_var_test <- as.matrix(x_full_var_test) %*% t(transf_mat)
 	y_test <- y[(train_n_lines+1):nrow(y), ]
 
-	#2. Treine uma regressão logística no conjunto de treino dos dados originais
+	#2. Treine uma regressao logistica no conjunto de treino dos dados originais
 	#e nos dados transformados. 
-	#Qual a taxa de acerto no conjunto de teste nas 2 condições (sem e com PCA)?
+	#Qual a taxa de acerto no conjunto de teste nas 2 condicoes (sem e com PCA)?
 	printf("\nItem 2:\n")
 	#logistic regression on all dimensions
 	printf("\t-All dimensions: ")
@@ -104,7 +104,7 @@ main <- function()
 		as.data.frame(x_part_var_test), y_test)
 
 	#3. Treine o LDA nos conjuntos de treino com e sem PCA e teste nos 
-	#respectivos conjuntos de testes. Qual a acurácia nas 2 condições?
+	#respectivos conjuntos de testes. Qual a acuracia nas 2 condicoes?
 	printf("\nItem 3:\n")
 	#lda on all dimensions 
 	printf("\t-All dimensions: ")
