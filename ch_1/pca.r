@@ -26,6 +26,14 @@ pca_k_pcs <- function(pcs, k=-1)
 	return(rbind(transf_mat))
 }
 
+pca_min_var <- function(pcs, var=0.80)
+{
+	vars_cumsum <- cumsum(pcs$sdev^2/sum(pcs$sdev^2))
+	k <- which(vars_cumsum >= var)[1]
+
+	return(pca_k_pcs(pcs, k))
+}
+
 pca_project <- function(data, k_pcs)
 {
 	projection <- data %*% t(k_pcs)
@@ -58,7 +66,7 @@ pca_example <- function()
 	#getting pcs
 	pcs <- prcomp(data, scale=TRUE)
 	printf("done. stats:\n")
-	summary(pcs)
+	print(summary(pcs))
 
 	#getting k principal components
 	k <- 1
