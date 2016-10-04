@@ -1,0 +1,140 @@
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber]{biblatex}
+\usepackage{csquotes}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%\usepackage{docmute}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+
+\addbibresource{ch_2.bib}
+
+\newcommand{\fromeng}[1]{\footnote{do inglês: \textit{#1}}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\lstset{%
+	language=R,
+	basicstyle=\scriptsize\ttfamily,
+	commentstyle=\ttfamily\color{gray},
+	numbers=left,
+	numberstyle=\ttfamily\color{blue}\footnotesize,
+	stringstyle=\ttfamily\color{olive}\footnotesize,
+	stepnumber=1,
+	numbersep=5pt,
+	backgroundcolor=\color{white},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	tabsize=2,
+	captionpos=b,
+	breaklines=true,
+	breakatwhitespace=false,
+	%title=\lstname,
+	escapeinside={},
+	keywordstyle={},
+	morekeywords={}
+}
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	{\scshape\Large MC884/MO444 - Aprendizado de Máquina\par}
+	\vspace{1.5cm}
+	{\huge\bfseries \tit{Support Vector Machines} e validação cruzada\par}
+	\vspace{1cm}
+	{\itshape Erik de Godoy Perillo - RA135582\par}
+	\vfill
+	Universidade Estadual de Campinas 
+	\vfill
+	{\large \today\par}
+\end{titlepage}
+
+\newpage
+
+\section{Introdução}
+O objetivo do trabalho era experimentar com a técnica de 
+\tit{SVM}\fromeng{Support Vector Machines} e sua validação por meio de
+\tit{k-folds} com busta de hiperparâmetros por \tit{grid search}.
+
+\subsection{Implementação}
+A linguagem de implementação escolhida foi o R.
+Todo o código utilizado no relatório encontra-se na seção~\ref{code}.
+Ao longo do documento, linhas do código serão citadas para referência no mesmo.
+A função \ttt{main} (linha 130 da seção~\ref{code}) executa todos os itens em
+ordem, mostrando os resultados.
+
+\section{Enunciado}
+\tit{Treine um SVM com kernel RBF nos dados do arquivos.
+A validação externa deve ser 5-fold estratificado.
+Para cada conjunto de treino da validação externa faça um 3-fold para 
+escolher os melhores hiperparametros para C (cost) e $\gamma$ (gamma).
+Faça um grid search de para o C nos valores $2^{-5}, 2^{-2}, 2^0, 2^2, 2^5$ 
+e gamma nos valores $2^{-15}, 2^{-10}, 2^{-5}, 2^0, 2^5$.}\newline
+
+Os valores especificados para os \tit{folds}, $C$ e $\gamma$
+são declarados das linhas 9 a 15 do código na seção~\ref{code}. 
+A função que faz o \tit{grid search} está declarada na linha
+28 do código. 
+Ela faz a procura da melhor combinação de parâmetros $C$ e $\gamma$.
+
+A função que, dados os dados e o número de folds, procura os melhores parâmetros
+$C$ e $\gamma$ entre os $k$ possíveis \tit{folds} (fazendo \tit{grid search} 
+em cada um deles) é a \ttt{get\_best\_svm\_params}, declarada na linha 57.
+
+Além dessa procura de melhor combinação entre $3$ folds e os hiperparâmetros,
+pede-se que esses $3$ folds venham de $5$ folds externos. 
+A função que finalmente faz todas essas partes, além de estimar a 
+acurácia média do sistema, é declarada como \ttt{mean\_accuracy\_estimate} na
+linha 101 do código.
+
+Na função \ttt{main} da linha 130 são feitos os dois passos principais pedidos:
+primeiro, a acurácia é estimada na linha 147. Depois, os parâmetros finais
+para o sistema são escolhidos na linha 159.
+
+A \tbf{saída} do código todo sendo executado pela \ttt{main} encontra-se
+na seção~\ref{output}.
+
+\subsection{Perguntas}
+\begin{enumerate}
+	\item \tit{Qual a acurácia média na validação de fora?}
+
+		A acurácia média, como indica a linha 43 da saída na seção~\ref{output},
+		é de $92.44\%$.	
+
+	\item \tit{Quais os valores de $C$ e $\gamma$ a serem usados no
+		classificador final? (fazer 3-fold no conjunto todo)}
+
+		Usando-se o 3-fold, obtivemos, como a linha 56 da saída indica,
+		os parâmetros finais:
+		$$C = 4,~\gamma = 0.031250$$
+\end{enumerate}
+
+\newpage
+
+\section{Código-fonte}
+\label{code}
+\lstinputlisting{../ch_2.r}
+
+\newpage
+
+\section{Saída do código}
+\label{output}
+\lstinputlisting{../output.txt}
+
+\printbibliography
+
+\end{document}
