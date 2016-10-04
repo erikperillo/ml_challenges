@@ -1,0 +1,140 @@
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber]{biblatex}
+\usepackage{csquotes}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%\usepackage{docmute}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+
+\addbibresource{ch_1.bib}
+
+\newcommand{\fromeng}[1]{\footnote{do inglês: \textit{#1}}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\lstset{%
+	language=R,
+	basicstyle=\scriptsize\ttfamily,
+	commentstyle=\ttfamily\color{gray},
+	numbers=left,
+	numberstyle=\ttfamily\color{blue}\footnotesize,
+	stringstyle=\ttfamily\color{olive}\footnotesize,
+	stepnumber=1,
+	numbersep=5pt,
+	backgroundcolor=\color{white},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	tabsize=2,
+	captionpos=b,
+	breaklines=true,
+	breakatwhitespace=false,
+	%title=\lstname,
+	escapeinside={},
+	keywordstyle={},
+	morekeywords={}
+}
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	{\scshape\Large MC884/MO444 - Aprendizado de Máquina\par}
+	\vspace{1.5cm}
+	{\huge\bfseries Regressão Logística e LDA\par}
+	\vspace{1cm}
+	{\itshape Erik de Godoy Perillo - RA135582\par}
+	\vfill
+	Universidade Estadual de Campinas 
+	\vfill
+	{\large \today\par}
+\end{titlepage}
+
+\newpage
+
+\section{Introdução}
+O objetivo do trabalho era experimentar com as técnicas de 
+PCA\fromeng{Principal Component Analisys}, \tit{Logistic Regression} e 
+\tit{LDA}\fromeng{Linear Discriminant Analisys}. 
+
+\subsection{Implementação}
+A linguagem de implementação escolhida foi o R.
+Todo o código utilizado no relatório encontra-se na seção~\ref{apdx}.
+Ao longo do documento, linhas do código serão citadas para referência no mesmo.
+A função \ttt{main} (linha 59 da seção~\ref{apdx}) executa todos os itens em
+ordem, mostrando os resultados.
+
+\section{Itens}
+\begin{enumerate}
+	\item \tit{faça o PCA dos dados (sem a última coluna). 
+	Se você quiser que os dados transformados tenham 80\% da variância original, 
+	quantas dimensões do PCA vc precisa manter?
+	Gere os dados transformados mantendo 80\% da variância.}
+
+	O PCA é calculado na linha 69 do código da seção~\ref{apdx}. 
+	Os dados são normalizados antes da função \ttt{prcomp} ser chamada, pois
+	já precisaremos deles normalizados no momento em que gerarmos os dados
+	nas novas dimensões.
+	A função \ttt{pca\_min\_pcs} da linha 19 da seção~\ref{apdx} contém o
+	código necessário para determinar o número mínimo de componentes dada
+	uma variância. Para o valor de 80\%, é necessário manter 13 das bases
+	com maior variância dos componentes principais.
+	A matriz de transformação dos dados antigos para os nas novas 13 dimensões
+	é obtida na linha 78 da seção~\ref{apdx}. 	
+	Os dados novos são gerados na linha 80.
+
+	\item \tit{Treine uma regressão logística no conjunto de treino dos dados 
+	originais e nos dados transformados. Qual a taxa de acerto no conjunto de 
+	teste nas 2 condições (sem e com PCA)?}
+	
+	A função que calcula a regressão logística e sua acurácia é dada na 
+	função \ttt{logit\_reg} da linha 32 da seção~\ref{apdx}. 
+	Os dados de treino e teste são selecionados entre as linhas 84 e 91.
+	Como resultado, obteve-se que a acurácia do modelo obtido pela regressão
+	com todos os dados foi menor que a obtida com as dimensões que mantinham
+	80\% da variância. Os valores foram, respectivamente, 65.58\% e 75.72\%.
+
+	\item \tit{Treine o LDA nos conjuntos de treino com e sem PCA e teste nos 
+	respectivos conjuntos de testes. Qual a acurácia nas 2 condições?}
+
+	A função que calcula a LDA e sua acurácia é dada na 
+	função \ttt{lda\_reg} da linha 45 da seção~\ref{apdx}. 
+	Como resultado, obteve-se que a acurácia do modelo obtido pela regressão
+	com todos os dados foi menor que a obtida com as dimensões que mantinham
+	80\% da variância, assim como no item 2. 
+	Os valores foram, respectivamente, 67.75\% e 78.62\%.
+
+	\item \tit{Qual a melhor combinação de classificador e PCA ou não?}
+	
+	A combinação que mostrou o melhor resultado foi o uso de PCA com LDA\@.
+	O resultado é interessante, ainda mais que na regressão logística, sob o 
+	uso de todas as dimensões, o algoritmo demonstrou mensagens de aviso do
+	tipo \ttt{algorithm did not converge}. 
+	Uma pesquisa para os motivos de tal resultado sugere~\cite{cvg} que isso
+	pode ser pelo fato de o modelo estar `'perfeito demais'' que, devido
+	a algum detalhe de implementação da função em R, faz com que alguns 
+	parâmetros fiquem com valores muito pequenos/grandes, sendo assim difíceis
+	de serem representados com precisão pelo computador e então gerando
+	resultados piores que os com PCA\@.
+\end{enumerate}
+
+\section{Apêndice: código-fonte}
+\label{apdx}
+\lstinputlisting{../ch_1.r}
+
+\printbibliography
+
+\end{document}
