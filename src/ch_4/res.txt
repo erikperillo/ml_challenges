@@ -1,0 +1,49 @@
+getting distances object for points... done.
+k = 2:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 2.739483 | corrected.rand: 0.321113
+
+k = 3:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 1.790139 | corrected.rand: 0.506041
+
+k = 4:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 1.611723 | corrected.rand: 0.524948
+
+k = 5:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 0.972936 | corrected.rand: 0.366150
+
+k = 6:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 0.972602 | corrected.rand: 0.369398
+
+k = 7:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 0.971041 | corrected.rand: 0.348167
+
+k = 8:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 0.820141 | corrected.rand: 0.290464
+
+k = 9:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 0.823787 | corrected.rand: 0.256664
+
+k = 10:
+        computing k-means... done.
+        computing clustering stats... done.
+        dunn2: 0.155116 | corrected.rand: 0.247585
+
+best internal metric score: 2.739483 (k=2)
+best external metric score: 0.524948 (k=4)
+plotting metrics...

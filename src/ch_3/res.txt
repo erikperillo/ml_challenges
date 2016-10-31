@@ -1,0 +1,6 @@
+FINAL RESULTS:  
+        knn best accuracy: 0.933333
+        svm best accuracy: 0.933674
+        nn best accuracy: 0.933674
+        rf best accuracy: 0.931035
+        gbm best accuracy: 0.933333

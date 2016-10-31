@@ -1,0 +1,147 @@
+\documentclass[10pt]{article}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[brazilian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber]{biblatex}
+\usepackage{csquotes}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%\usepackage{docmute}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{geometry}
+\usepackage[T1]{fontenc}
+
+\addbibresource{ch_2.bib}
+
+\newcommand{\fromeng}[1]{\footnote{do inglês: \textit{#1}}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
+
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\lstset{%
+	language=R,
+	basicstyle=\scriptsize\ttfamily,
+	commentstyle=\ttfamily\color{gray},
+	numbers=left,
+	numberstyle=\ttfamily\color{blue}\footnotesize,
+	stringstyle=\ttfamily\color{olive}\footnotesize,
+	stepnumber=1,
+	numbersep=5pt,
+	backgroundcolor=\color{white},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	tabsize=2,
+	captionpos=b,
+	breaklines=true,
+	breakatwhitespace=false,
+	%title=\lstname,
+	escapeinside={},
+	keywordstyle={},
+	morekeywords={}
+}
+
+\begin{document}
+
+\begin{titlepage}
+	\centering
+	{\scshape\Large MC884/MO444 - Aprendizado de Máquina\par}
+	\vspace{1.5cm}
+    {\huge\bfseries Experimentação com diversas Técnicas\par}
+	\vspace{1cm}
+	{\itshape Erik de Godoy Perillo - RA135582\par}
+	\vfill
+	Universidade Estadual de Campinas
+	\vfill
+	{\large \today\par}
+\end{titlepage}
+
+\newpage
+
+\section{Introdução}
+O objetivo do trabalho era experimentar com diversas técnicas de
+\tit{Machine Learning:} \tit{K-nearest neighbours, SVM, Neural Networks,
+    Random Forests, GBM.}
+
+\subsection{Implementação}
+A linguagem de implementação escolhida foi o R.
+Todo o código utilizado no relatório encontra-se na seção~\ref{code}.
+Ao longo do documento, linhas do código serão citadas para referência no mesmo.
+A função \ttt{main} (linha 254 da seção~\ref{code}) executa tudo que é
+requisitado no enunciado, mostrando os resultados.
+
+\section{Metodologia}
+O pré-processamento pedido é feito na função \ttt{pre\_proc}, definida na linha
+$39$ da seção~\ref{code}. As colunas com 30\% dos dados faltantes são
+removidas seguidas das linhas com dados faltantes. Os dados são normalizados
+com média 0 e desvio padrão 1.
+
+É feita validação \tit{k-fold} externa de 5 \tit{folds} com
+validações internas de 3 \tit{folds}. Para cada algoritmo,
+foi feita uma função para achar os melhores parâmetros e uma para a
+acurácia a cada \tit{fold} externo.
+Todos os parâmetros requisitados para serem usados nas buscas são definidos
+a partir da linha 12 da seção~\ref{code}.
+
+Para todos os algoritmos, é mantida a maior acurácia.
+No final, todas as maiores acurácias pelo \tit{k-fold} externo são
+reportadas na linha 380 da função \ttt{main}.
+
+\begin{itemize}
+    \item \tbf{\ttt{Knn}}: Funções de busca de parâmetros e determinação de
+        acurácia estão nas linhas 81 e 100, respectivamente, da
+        seção~\ref{code}. O PCA é implementado como pedido, mantendo 80\%
+        da variância.
+
+    \item \tbf{\ttt{SVM}}: Funções de busca de parâmetros e determinação
+        de acurácia nas linhas 111 e 126, respectivamente.
+
+    \item \tbf{\ttt{Neural Network}}: Funções de busca de parâmetros e
+        determinação de acurácia nas linhas 148 e 163, respectivamente.
+
+    \item \tbf{\ttt{Random Forests}}: Funções de busca de parâmetros e
+        determinação de acurácia nas linhas 183 e 197, respectivamente.
+
+    \item \tbf{\ttt{GBM}}: Funções de busca de parâmetros e determinação
+        de acurácia nas linhas 214 e 230, respectivamente.
+\end{itemize}
+
+\tbf{saída relevante} do código todo sendo executado pela \ttt{main}
+encontra-se na seção~\ref{output}.
+
+\section{Resultados}
+Como se observa na saída da seção~\ref{output}, os algoritmos que obteram
+melhores acurácias, em ordem decrescente, são: \ttt{SVM, Neural Network, GBM,
+Knn, Random Forest.}
+%\begin{enumerate}
+%    \item \ttt{SVM}
+%    \item \ttt{Neural Network}
+%    \item \ttt{GBM}
+%    \item \ttt{Knn}
+%    \item \ttt{Random Forest}
+%\end{enumerate}
+Vale notar, entretanto, que todos os algoritmos obtiveram resultados muito
+parecidos e então não pode-se tirar conclusões definitivas sobre qual o
+melhor.
+
+\newpage
+\section{Código-fonte}
+\label{code}
+\lstinputlisting{../ch_3.r}
+
+\newpage
+
+\section{Saída do código}
+\label{output}
+\lstinputlisting{../res.txt}
+
+\printbibliography
+
+\end{document}

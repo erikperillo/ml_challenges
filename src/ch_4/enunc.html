@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Exercicio 4</title>
+<style type="text/css">
+:root #header + #content > #left > #rlblock_left
+{ display: none !important; }</style></head>
+
+<body>
+<h1>Exercício 4</h1>
+
+
+<p> <b>Data de entrega: 31/10, as 7:00 (da manha).</b>
+
+</p><p> Use os dados  <a href="http://www.ic.unicamp.br/%7Ewainer/cursos/2s2016/ml/cluster-data.csv">do arquivo cluster-data.csv</a> (os dados sao
+uma media de 30 medidas por vez da pessoa 1 do dataset <a href="https://archive.ics.uci.edu/ml/datasets/Activity+Recognition+from+Single+Chest-Mounted+Accelerometer"> Activity Recognition from Single Chest-Mounted Accelerometer Data Set  </a>
+
+</p><p> Rode o kmeans nos dados, com numero de restarts = 5
+
+</p><p> Use alguma metrica interna (algum Dunn, Silhouette, Calinski-Harabaz index) - apenas uma
+-para escolher o k entre 2 e 10.
+
+</p><p> O arquivo  <a href="http://www.ic.unicamp.br/%7Ewainer/cursos/2s2016/ml/cluster-data-class.csv">cluster-data-class.csv</a> contem a
+classe correta de cada ponto. Use alguma medida externa
+(Normalized/adjusted Rand, Mutual information, variation of information) para decidir no k.
+
+</p><p> Plote os graficos correspondentes das 2 metricas (interna e
+externa) para os varios valores de k (extra).
+
+
+</p><h2> Detalhes R</h2>
+
+<p> A função <a href="https://www.rdocumentation.org/packages/fpc/versions/2.1-10/topics/cluster.stats">cluster.stats</a>
+do pacote fpc computa varias metricas internas, e externas se alt.clustering
+for fornecido
+
+</p><h2> Detalhes Python</h2>
+
+Sklearn tem varias <a href="http://scikit-learn.org/stable/modules/clustering.html#clustering-evaluation">metricas
+de cluster</a> implementadas 
+
+<hr>
+<address></address>
+<!-- hhmts start -->Last modified: Sun Oct 16 21:35:40 BRST 2016 <!-- hhmts end -->
+ 
+</body></html>
